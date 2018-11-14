@@ -8,11 +8,11 @@ object Calculator extends App {
   def printGreeting(): Unit = {
     println("Введите арифметическое выражение")
   }
-
   def getResult(expression: String): Double = {
     val expLexer = new ExpLexer(CharStreams.fromString(expression))
     val expParser = new ExpParser(new BufferedTokenStream(expLexer))
-    expParser.expr().value
+    val visitor = CalculatorVisitor
+    visitor.visit(expParser.expression()).toDouble
   }
 
   override def main(args: Array[String]): Unit = {

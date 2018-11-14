@@ -11,9 +11,15 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface ExpVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link ExpParser#expr}.
+	 * Visit a parse tree produced by {@link ExpParser#input}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpr(ExpParser.ExprContext ctx);
+	T visitInput(ExpParser.InputContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExpParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpression(ExpParser.ExpressionContext ctx);
 }

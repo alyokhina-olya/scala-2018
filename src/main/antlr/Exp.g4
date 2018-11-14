@@ -1,30 +1,55 @@
 grammar Exp;
 
+input: expression EOF;
 
-expr returns [double value]
-    : EOF {$value = 0;}
-    |Number {$value=Double.parseDouble($Number.text);}
-    | 'true' {$value=1;}
-    | 'false' {$value=0;}
-    | '(' + expression = expr + ')' {$value = $expression.value;}
-    | '!' expression = expr {$value = ($expression.value == 0) ? 1 : 0;}
-    | left = expr op = '*' right = expr{$value = $left.value * $right.value;}
-    | left = expr op = '/' right = expr{$value = $left.value / $right.value;}
-    | left = expr op = '%' right = expr{$value = $left.value % $right.value;}
-    | left = expr op = '+'right = expr{$value = $left.value + $right.value;}
-    | left = expr op = '-' right = expr{$value = $left.value - $right.value;}
-    | left = expr op = '<' right = expr{$value = ($left.value < $right.value) ? 1 : 0;}
-    | left = expr op = '>' right = expr{$value = ($left.value > $right.value) ? 1 : 0;}
-    | left = expr op = '<=' right = expr{$value = ($left.value <= $right.value) ? 1 : 0;}
-    | left = expr op = '>=' right = expr{$value = ($left.value >= $right.value) ? 1 : 0;}
-    | left = expr op = '==' right = expr{$value = ($left.value == $right.value) ? 1 : 0;}
-    | left = expr op = '!=' right = expr{$value = ($left.value != $right.value) ? 1 : 0;}
-    | left = expr op = '&&' right = expr{$value = ($left.value == 0 || $right.value == 0) ? 0 : 1;}
-    | left = expr op = '||' right = expr{$value = ($left.value == 0 && $right.value == 0) ? 0 : 1;}
+expression
+    : Number
+    | Boolean
+    | Not expression
+    | expression Mul expression
+    | expression Add expression
+    | expression Cmp expression
+    | expression Eq expression
+    | expression And expression
+    | expression Or expression
+    | '(' + expression + ')'
     ;
 
 Number
     :    ('+'|'-')?('0'..'9')+ ('.' ('0'..'9')+)?
     ;
+
+Boolean
+    :'true'
+    | 'false'
+    ;
+
+Add
+    : '+'
+    | '-'
+    ;
+
+Mul
+    : '*'
+    | '/'
+    | '%'
+    ;
+Cmp
+    : '<'
+    | '<='
+    | '>'
+    | '>='
+    ;
+
+Eq
+    : '=='
+    | '!='
+    ;
+
+And : '&&';
+
+Or : '||';
+
+Not: '!';
 
 WS : (' ' | '\t' | '\r'| '\n') -> skip;
