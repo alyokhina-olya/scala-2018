@@ -26,7 +26,7 @@ class SplayTree[T](comparator: Ordering[T]) {
       return false
     }
     if (root == null) {
-      root = new Node(e, null, null, null)
+      root = new Node(e)
     }
     else {
       root = insert(root, e)
@@ -225,7 +225,7 @@ class SplayTree[T](comparator: Ordering[T]) {
 
   private def insert(root: Node, key: T): Node = {
     if (root == null) {
-      return new Node(key, null, null, null)
+      return new Node(key)
     }
     val (left, right) = split(root, key)
     val newRoot = new Node(key, left, right)
