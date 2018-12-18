@@ -1,4 +1,4 @@
-package ru.spbau.jvm.scala.lecture08
+package ru.spbau.jvm.scala
 package hlist
 
 trait Appendable[L <: HList, R <: HList, Result <: HList] {
